@@ -7,7 +7,16 @@ def recall_from_source(employee_name: str) -> list:
     RAG Step 1: Adaptive Document Retrieval
     Fetches and unifies all logs across multiple document streams (HR, Auth, File, USB, etc.)
     """
-    db_path = os.environ.get("DATABASE_PATH", "Memory/corporate_security_agent.db")
+   # 1. Get the absolute path of the directory containing this specific file
+    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+    
+    # 2. Move up one level to the root directory and point to the Memory folder
+    BASE_DIR = os.path.dirname(CURRENT_DIR)
+    DEFAULT_DB_PATH = os.path.join(BASE_DIR, "Memory", "corporate_security_agent.db")
+    
+    # 3. Fallback to environment variable if set, otherwise use the absolute cross-platform path
+    db_path = os.environ.get("DATABASE_PATH", DEFAULT_DB_PATH)
+    
     if not os.path.exists(db_path):
         print(f"⚠️ Database file not found at: {db_path}")
         return []
