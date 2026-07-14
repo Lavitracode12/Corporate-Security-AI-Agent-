@@ -1,0 +1,512 @@
+[
+  {
+    "timestamp": "2026-06-20T02:13:00",
+    "employee_id": "EMP001",
+    "username": "achen",
+    "ip_address": "198.51.100.42",
+    "location": "Unknown (VPN Out of State)",
+    "device": "Personal-MacBook",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T14:25:00",
+    "employee_id": "EMP024",
+    "username": "user_EMP024",
+    "ip_address": "210.26.69.235",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T09:29:00",
+    "employee_id": "EMP012",
+    "username": "user_EMP012",
+    "ip_address": "181.149.165.248",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T07:20:00",
+    "employee_id": "EMP006",
+    "username": "user_EMP006",
+    "ip_address": "140.146.142.106",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T03:29:00",
+    "employee_id": "EMP012",
+    "username": "user_EMP012",
+    "ip_address": "11.126.192.217",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:58:00",
+    "employee_id": "EMP004",
+    "username": "user_EMP004",
+    "ip_address": "119.141.64.135",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:15:00",
+    "employee_id": "EMP005",
+    "username": "user_EMP005",
+    "ip_address": "170.143.10.171",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T20:36:00",
+    "employee_id": "EMP013",
+    "username": "user_EMP013",
+    "ip_address": "46.98.193.104",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T01:28:00",
+    "employee_id": "EMP010",
+    "username": "user_EMP010",
+    "ip_address": "129.134.232.187",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T18:18:00",
+    "employee_id": "EMP016",
+    "username": "user_EMP016",
+    "ip_address": "106.209.14.132",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:55:00",
+    "employee_id": "EMP005",
+    "username": "user_EMP005",
+    "ip_address": "89.50.43.201",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T18:50:00",
+    "employee_id": "EMP004",
+    "username": "user_EMP004",
+    "ip_address": "84.37.132.175",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T21:27:00",
+    "employee_id": "EMP011",
+    "username": "user_EMP011",
+    "ip_address": "189.86.238.190",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:20:00",
+    "employee_id": "EMP021",
+    "username": "user_EMP021",
+    "ip_address": "120.45.126.160",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T06:33:00",
+    "employee_id": "EMP020",
+    "username": "user_EMP020",
+    "ip_address": "57.34.104.4",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T02:22:00",
+    "employee_id": "EMP024",
+    "username": "user_EMP024",
+    "ip_address": "122.161.177.56",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T22:34:00",
+    "employee_id": "EMP003",
+    "username": "user_EMP003",
+    "ip_address": "161.187.253.132",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T09:52:00",
+    "employee_id": "EMP009",
+    "username": "user_EMP009",
+    "ip_address": "117.98.62.38",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T07:56:00",
+    "employee_id": "EMP004",
+    "username": "user_EMP004",
+    "ip_address": "34.56.238.86",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:58:00",
+    "employee_id": "EMP005",
+    "username": "user_EMP005",
+    "ip_address": "9.161.181.222",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T15:28:00",
+    "employee_id": "EMP010",
+    "username": "user_EMP010",
+    "ip_address": "96.250.42.215",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:27:00",
+    "employee_id": "EMP022",
+    "username": "user_EMP022",
+    "ip_address": "51.136.132.8",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:38:00",
+    "employee_id": "EMP007",
+    "username": "user_EMP007",
+    "ip_address": "86.142.71.212",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T07:09:00",
+    "employee_id": "EMP013",
+    "username": "user_EMP013",
+    "ip_address": "110.201.106.45",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T09:06:00",
+    "employee_id": "EMP023",
+    "username": "user_EMP023",
+    "ip_address": "143.111.43.128",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T23:19:00",
+    "employee_id": "EMP024",
+    "username": "user_EMP024",
+    "ip_address": "73.176.78.117",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T02:26:00",
+    "employee_id": "EMP022",
+    "username": "user_EMP022",
+    "ip_address": "153.54.64.121",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T21:40:00",
+    "employee_id": "EMP021",
+    "username": "user_EMP021",
+    "ip_address": "176.149.254.150",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T18:13:00",
+    "employee_id": "EMP007",
+    "username": "user_EMP007",
+    "ip_address": "22.127.254.220",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T05:34:00",
+    "employee_id": "EMP009",
+    "username": "user_EMP009",
+    "ip_address": "162.218.236.200",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:57:00",
+    "employee_id": "EMP016",
+    "username": "user_EMP016",
+    "ip_address": "151.181.209.14",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T21:50:00",
+    "employee_id": "EMP010",
+    "username": "user_EMP010",
+    "ip_address": "28.206.107.183",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T19:00:00",
+    "employee_id": "EMP024",
+    "username": "user_EMP024",
+    "ip_address": "26.108.212.184",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T23:22:00",
+    "employee_id": "EMP009",
+    "username": "user_EMP009",
+    "ip_address": "70.139.18.144",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T01:54:00",
+    "employee_id": "EMP012",
+    "username": "user_EMP012",
+    "ip_address": "138.128.192.171",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T01:05:00",
+    "employee_id": "EMP009",
+    "username": "user_EMP009",
+    "ip_address": "143.125.241.106",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T13:41:00",
+    "employee_id": "EMP012",
+    "username": "user_EMP012",
+    "ip_address": "16.184.196.58",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T02:15:00",
+    "employee_id": "EMP010",
+    "username": "user_EMP010",
+    "ip_address": "21.140.65.70",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T19:21:00",
+    "employee_id": "EMP008",
+    "username": "user_EMP008",
+    "ip_address": "48.221.227.243",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T10:44:00",
+    "employee_id": "EMP024",
+    "username": "user_EMP024",
+    "ip_address": "114.3.45.225",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T22:22:00",
+    "employee_id": "EMP008",
+    "username": "user_EMP008",
+    "ip_address": "66.173.57.119",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T13:30:00",
+    "employee_id": "EMP017",
+    "username": "user_EMP017",
+    "ip_address": "219.41.4.235",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T15:39:00",
+    "employee_id": "EMP022",
+    "username": "user_EMP022",
+    "ip_address": "33.17.181.163",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T09:02:00",
+    "employee_id": "EMP006",
+    "username": "user_EMP006",
+    "ip_address": "177.53.171.128",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T08:25:00",
+    "employee_id": "EMP006",
+    "username": "user_EMP006",
+    "ip_address": "93.155.65.22",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T18:23:00",
+    "employee_id": "EMP019",
+    "username": "user_EMP019",
+    "ip_address": "43.235.251.54",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T19:57:00",
+    "employee_id": "EMP010",
+    "username": "user_EMP010",
+    "ip_address": "160.136.115.191",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T19:55:00",
+    "employee_id": "EMP015",
+    "username": "user_EMP015",
+    "ip_address": "192.184.95.171",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T12:21:00",
+    "employee_id": "EMP014",
+    "username": "user_EMP014",
+    "ip_address": "69.33.126.114",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T04:43:00",
+    "employee_id": "EMP009",
+    "username": "user_EMP009",
+    "ip_address": "168.221.234.102",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  },
+  {
+    "timestamp": "2026-06-20T16:50:00",
+    "employee_id": "EMP018",
+    "username": "user_EMP018",
+    "ip_address": "101.144.119.144",
+    "location": "Office Branch",
+    "device": "Corp-Laptop",
+    "status": "Success",
+    "failure_reason": null
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "timestamp": "2026-06-20T03:47:00",
+    "employee_id": "EMP001",
+    "device_id": "USB-SanDisk-AX882",
+    "device_type": "External Mass Storage",
+    "action": "CONNECTED",
+    "files_transferred": 142
+  }
+]

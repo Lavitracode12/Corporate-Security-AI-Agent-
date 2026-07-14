@@ -1,0 +1,11 @@
+[
+  {
+    "timestamp": "2026-06-20T02:47:00",
+    "sender": "alex.chen@corporate.com",
+    "recipient": "alex.chen.99.personal@gmail.com",
+    "subject": "Archived Personal Notes",
+    "has_attachment": true,
+    "attachment_name": "project_falcon_backup.zip",
+    "size_mb": 847.0
+  }
+]

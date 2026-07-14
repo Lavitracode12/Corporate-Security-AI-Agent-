@@ -1,0 +1,9 @@
+[
+  {
+    "timestamp": "2026-06-20T04:45:00",
+    "employee_id": "EMP001",
+    "url": "https://www.dropbox.com/home/upload",
+    "action": "POST_UPLOAD",
+    "data_transferred_mb": 1200.0
+  }
+]

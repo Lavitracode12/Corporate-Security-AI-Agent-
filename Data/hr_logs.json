@@ -1,0 +1,242 @@
+[
+  {
+    "employee_id": "EMP001",
+    "name": "Alex Chen",
+    "role": "Principal Security Engineer",
+    "department": "Infrastructure",
+    "manager": "Sarah Jenkins",
+    "start_date": "2022-03-11",
+    "resignation_date": "2026-06-25",
+    "status": "Resigned"
+  },
+  {
+    "employee_id": "EMP002",
+    "name": "Sarah Jenkins",
+    "role": "VP of Infrastructure",
+    "department": "Infrastructure",
+    "manager": "CEO",
+    "start_date": "2020-01-15",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP003",
+    "name": "Veronica Greene",
+    "role": "Psychotherapist, child",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP004",
+    "name": "Thomas Taylor",
+    "role": "Operational investment banker",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP005",
+    "name": "Terry Davenport",
+    "role": "Special effects artist",
+    "department": "HR",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP006",
+    "name": "Mark Williams",
+    "role": "Media planner",
+    "department": "Sales",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP007",
+    "name": "Kristopher Hines",
+    "role": "Pharmacologist",
+    "department": "Sales",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP008",
+    "name": "Joseph Lane",
+    "role": "Scientist, research (life sciences)",
+    "department": "Sales",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP009",
+    "name": "Dana Grant",
+    "role": "Engineer, building services",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP010",
+    "name": "Karen Young",
+    "role": "Social worker",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP011",
+    "name": "Eric Kelly",
+    "role": "Clinical molecular geneticist",
+    "department": "Legal",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP012",
+    "name": "Susan Turner",
+    "role": "Trade union research officer",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP013",
+    "name": "Jill Lopez",
+    "role": "Insurance broker",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP014",
+    "name": "Michael Cross",
+    "role": "Scientist, research (physical sciences)",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP015",
+    "name": "Brett Serrano",
+    "role": "Analytical chemist",
+    "department": "Sales",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP016",
+    "name": "Ms. Christine Anderson",
+    "role": "Archaeologist",
+    "department": "Sales",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP017",
+    "name": "William Rodriguez",
+    "role": "Hospital pharmacist",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP018",
+    "name": "Madison Randall",
+    "role": "Surveyor, building",
+    "department": "Sales",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP019",
+    "name": "Nicole Moses DVM",
+    "role": "Nurse, learning disability",
+    "department": "Legal",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP020",
+    "name": "Angela Young",
+    "role": "Tourism officer",
+    "department": "Sales",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP021",
+    "name": "Franklin Hawkins",
+    "role": "Meteorologist",
+    "department": "Legal",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP022",
+    "name": "Miguel Leon",
+    "role": "Surveyor, commercial/residential",
+    "department": "HR",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP023",
+    "name": "Samuel Hill",
+    "role": "Secretary, company",
+    "department": "Engineering",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  },
+  {
+    "employee_id": "EMP024",
+    "name": "John Howell",
+    "role": "Transport planner",
+    "department": "Sales",
+    "manager": "Sarah Jenkins",
+    "start_date": "2024-05-01",
+    "resignation_date": null,
+    "status": "Active"
+  }
+]
