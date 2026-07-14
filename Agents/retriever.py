@@ -1,22 +1,31 @@
+from reportlab.lib import styles
 import sqlite3
 import os
 import json
+import sys
 
 def recall_from_source(employee_name: str) -> list:
     """
     RAG Step 1: Adaptive Document Retrieval
     Fetches and unifies all logs across multiple document streams (HR, Auth, File, USB, etc.)
     """
-   # 1. Get the absolute path of the directory containing this specific file
-    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-    
-    # 2. Move up one level to the root directory and point to the Memory folder
-    BASE_DIR = os.path.dirname(CURRENT_DIR)
-    DEFAULT_DB_PATH = os.path.join(BASE_DIR, "Memory", "corporate_security_agent.db")
-    
-    # 3. Fallback to environment variable if set, otherwise use the absolute cross-platform path
-    db_path = os.environ.get("DATABASE_PATH", DEFAULT_DB_PATH)
-    
+    # 1. Grab the absolute directory path where the server process starts
+    ROOT_DIR = os.path.dirname(os.path.abspath(sys.argv[0]))
+
+    # 2. Map the absolute paths for both case variants
+    path_uppercase = os.path.join(ROOT_DIR, "Memory", "corporate_security_agent.db")
+    path_lowercase = os.path.join(ROOT_DIR, "memory", "corporate_security_agent.db")
+
+    # 3. Choose the path that actually contains the database file
+    if os.path.exists(path_uppercase):
+        db_path = path_uppercase
+    elif os.path.exists(path_lowercase):
+        db_path = path_lowercase
+    else:
+        # Look for it right in the root folder as a final fallback
+        db_path = os.path.join(ROOT_DIR, "corporate_security_agent.db")
+
+    # If it still doesn't exist anywhere, print out the actual dynamic path it attempted to check
     if not os.path.exists(db_path):
         print(f"⚠️ Database file not found at: {db_path}")
         return []
