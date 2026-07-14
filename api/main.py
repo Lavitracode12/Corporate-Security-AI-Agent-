@@ -18,7 +18,7 @@ class QueryRequest(BaseModel):
 
 @app.post("/query")
 async def run_investigation(request: QueryRequest):
-    # 🛡️ STEP 0: ENTRY DOOR GUARDRAIL INTERCEPT
+    # ENTRY DOOR GUARDRAIL INTERCEPT
     # Stop malicious or phishing prompts before they touch ANY engine pipelines!
     is_safe, threat_type, reason = SecurityGuardrails.check_input_safety(request.query)
     
@@ -41,26 +41,26 @@ async def run_investigation(request: QueryRequest):
             "timeline": []
         }
 
-    # ----------------------------------------------------
+  
     # NORMAL PIPELINE (Only runs if query passes safety checks)
-    # ----------------------------------------------------
+   
     initial_state = {
         "query": request.query,
         "demo_mode": request.demo_mode,
-        "intent": "chat",  # Default to chat layout
+        "intent": "chat",  # Default 
         "sub_queries": [],
         "findings": [],
         "timeline": [],
         "threat_score": 0.0,
-        "threat_level": "N/A",  # Crucial key mapping for app.py chat view conditional check
+        "threat_level": "N/A",  
         "summary_verdict": ""
     }
     
     try:
-        # 1. Execute the LangGraph flow steps
+        # Execute the LangGraph flow steps
         final_state = await app_graph.ainvoke(initial_state)
         
-        # 🌟 INTERCEPT FOCUS: Check if the graph router isolated conversational chat intent
+        # INTERCEPT FOCUS: Check if the graph router isolated conversational chat intent
         if final_state.get("intent") == "chat" or final_state.get("threat_level") == "N/A":
             if not final_state.get("summary_verdict"):
                 final_state["summary_verdict"] = "Hello! I am your Corporate Security Assistant. Please provide an explicit forensic directive or designate an employee's identity footprint to initialize a multi-hop timeline search sequence."
@@ -70,9 +70,8 @@ async def run_investigation(request: QueryRequest):
             final_state["sub_queries"] = ["General Chat Sequence Executed"]
             return final_state
 
-        # ----------------------------------------------------
-        # 🛡️ FULL INVESTIGATION PIPELINE (Only runs for real security queries)
-        # ----------------------------------------------------
+        # FULL INVESTIGATION PIPELINE (Only runs for real security queries)
+
         clean_q = request.query.lower().replace("?", "").replace(".", "").replace("'", "")
         query_words = clean_q.split()
         
