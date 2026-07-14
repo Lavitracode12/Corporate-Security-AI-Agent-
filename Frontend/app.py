@@ -354,7 +354,7 @@ if execute:
     with st.spinner("Traversing across the documents..."):
         try:
             res = requests.post(
-                "http://127.0.0.1:8080/query",
+                "https://security-agent-backend.onrender.com/query",
                 json={"query": query_input, "demo_mode": demo_mode}
             ).json()
 
