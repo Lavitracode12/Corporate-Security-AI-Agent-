@@ -1,14 +1,20 @@
 import re
+import os
+import sys
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict, Any
 from dotenv import load_dotenv
 load_dotenv()
 
+# Force standard local paths synchronization
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from Graph.workflow import app_graph
 from Agents.retriever import recall_from_source
 from Agents.scorer import ThreatScorer
 from Agents.guardrails import SecurityGuardrails
+import difflib
 
 app = FastAPI()
 
@@ -18,36 +24,26 @@ class QueryRequest(BaseModel):
 
 @app.post("/query")
 async def run_investigation(request: QueryRequest):
-    # ENTRY DOOR GUARDRAIL INTERCEPT
-    # Stop malicious or phishing prompts before they touch ANY engine pipelines!
-    is_safe, threat_type, reason = SecurityGuardrails.check_input_safety(request.query)
+    print(f"\n📥 [FASTAPI INTERCEPT] Incoming live dashboard stream: '{request.query}'")
     
+    # 0. GUARDRAIL CHECK
+    is_safe, threat_type, reason = SecurityGuardrails.check_input_safety(request.query)
     if not is_safe:
-        print(f"🚨 [API INTERCEPT] Guardrail violation caught: {threat_type}")
         return {
             "status": "blocked",
             "intent": "security_block",
             "threat_score": 100.0,
             "threat_level": "CRITICAL / BLOCKED",
-            "summary_verdict": (
-                f"🛑 **SECURITY CLEARANCE DENIED: ACTIVE GUARDRAIL INTERCEPT**\n\n"
-                f"**Violation Category:** `{threat_type.upper()}`\n"
-                f"**Audit Log:** {reason}\n\n"
-                f"*This directive has been logged and flagged in the InvenTech Security Incident Matrix. "
-                f"As an enterprise security agent, I am strictly restricted from executing commands that threaten corporate infrastructure, bypass compliance bylaws, or generate social engineering vectors.*"
-            ),
+            "summary_verdict": f"🛑 **SECURITY CLEARANCE DENIED: ACTIVE GUARDRAIL INTERCEPT**\n\nViolation: `{threat_type.upper()}`",
             "sub_queries": ["Intercept incoming adversarial prompt"],
             "findings": [],
             "timeline": []
         }
 
-  
-    # NORMAL PIPELINE (Only runs if query passes safety checks)
-   
     initial_state = {
         "query": request.query,
         "demo_mode": request.demo_mode,
-        "intent": "chat",  # Default 
+        "intent": "chat",  
         "sub_queries": [],
         "findings": [],
         "timeline": [],
@@ -57,63 +53,56 @@ async def run_investigation(request: QueryRequest):
     }
     
     try:
-        # Execute the LangGraph flow steps
+        # 1. Execute state orchestration graph framework
         final_state = await app_graph.ainvoke(initial_state)
         
-        # INTERCEPT FOCUS: Check if the graph router isolated conversational chat intent
-        if final_state.get("intent") == "chat" or final_state.get("threat_level") == "N/A":
-            if not final_state.get("summary_verdict"):
-                final_state["summary_verdict"] = "Hello! I am your Corporate Security Assistant. Please provide an explicit forensic directive or designate an employee's identity footprint to initialize a multi-hop timeline search sequence."
-            
-            final_state["threat_level"] = "N/A"
-            final_state["timeline"] = []
-            final_state["sub_queries"] = ["General Chat Sequence Executed"]
+        # 2. Text stream analysis boundaries normalization
+        clean_q = request.query.lower().strip().replace("?", "").replace(".", "").replace("'", "")
+        query_words = clean_q.split()
+        VALID_TARGETS = ["alex", "susan", "brett", "michael"]
+
+        def find_best_match(word, choices, cutoff=0.7):
+            matches = difflib.get_close_matches(word, choices, n=1, cutoff=cutoff)
+            return matches[0] if matches else None
+
+        target_name = None
+        for word in query_words:
+            matched_name = find_best_match(word, VALID_TARGETS, cutoff=0.7)
+            if matched_name:
+                target_name = matched_name
+                break
+
+        has_target_in_text = any(find_best_match(word, VALID_TARGETS, cutoff=0.7) for word in query_words)
+        has_policy_keywords = any(kw in clean_q for kw in ["policy", "rule", "guideline", "bylaw", "company", "data", "performance", "review"])
+
+        # 3. INTERCEPT ROUTER LOGIC: Verify output mapping strategy
+        if final_state.get("intent") == "chat":
+            print("🟢 [ROUTE LOGIC] Isolated general corporate query. Direct generation active.")
             return final_state
 
-        # FULL INVESTIGATION PIPELINE (Only runs for real security queries)
-
-        clean_q = request.query.lower().replace("?", "").replace(".", "").replace("'", "")
-        query_words = clean_q.split()
-        
-        target_name = None
-        if "employee" in query_words:
-            idx = query_words.index("employee")
-            if idx + 1 < len(query_words):
-                target_name = query_words[idx + 1]
-                
-        if not target_name or target_name in ["has", "is", "was", "the"]:
-            for name in ["alex", "susan", "brett", "michael"]:
-                if name in query_words:
-                    target_name = name
-                    break
-                    
+        # 4. FORCED INVESTIGATION ENHANCEMENT PIPELINE
         if not target_name:
             target_name = "alex"
-            
-        print(f"🎯 [BACKEND PARSER] Dynamic Forensics Target: '{target_name}'")
-        
-        # Load the exact timeline documents
+
+        print(f"🎯 [ROUTE LOGIC] Processing active entity database profile target: '{target_name}'")
+                
+        # Run real retrieval synchronization
         validated_logs = recall_from_source(target_name)
         final_state["timeline"] = validated_logs
         
-        # Run threat intelligence calculations
         scorer = ThreatScorer()
         score, level, verdict = scorer.calculate_score(validated_logs, demo_mode=request.demo_mode)
         
         final_state["threat_score"] = score
         final_state["threat_level"] = level
         final_state["summary_verdict"] = verdict
+        final_state["intent"] = "investigate"
         
-        if not final_state.get("sub_queries") or "Alex" in final_state.get("sub_queries")[0]:
-            final_state["sub_queries"] = [
-                f"Review HR records for {target_name.capitalize()}",
-                f"Analyze authentication logs for {target_name.capitalize()}",
-                f"Inspect file access logs for {target_name.capitalize()}",
-                f"Examine USB device connection history for {target_name.capitalize()}",
-                f"Search email communications for {target_name.capitalize()}",
-                f"Monitor Slack channels for {target_name.capitalize()}",
-                f"Audit browser search history for {target_name.capitalize()}"
-            ]
+        final_state["sub_queries"] = [
+            f"Review HR records for {target_name.capitalize()}",
+            f"Analyze authentication logs for {target_name.capitalize()}",
+            f"Inspect file access logs for {target_name.capitalize()}"
+        ]
             
         return final_state
         

@@ -30,27 +30,18 @@ def extract_target_employee(query_text: str) -> str:
         return profile.get("name")
     return ""
 
-
 def intent_router_node(state: InvestigationState) -> Dict[str, Any]:
-    """
-    Step 1: Analyzes query intent. 
-    Intercepts adversarial threats immediately and overrides state keys dynamically.
-    """
     query_lower = state["query"].lower()
     
-    # STEP 0: ACTIVE GUARDRAIL INTERCEPTION
+    # 1. ACTIVE GUARDRAIL INTERCEPTION
     is_safe, threat_type, reason = SecurityGuardrails.check_input_safety(state["query"])
     if not is_safe:
-        print(f"🚨 GUARDRAIL BREACH DETECTED [{threat_type}]: Injecting defense payload.")
-        
         alert_message = (
             f"🛑 **SECURITY CLEARANCE DENIED: ACTIVE GUARDRAIL INTERCEPT**\n\n"
             f"**Violation Category:** `{threat_type.upper()}`\n"
             f"**Audit Log:** {reason}\n\n"
-            f"*This directive has been logged and flagged in the InvenTech Security Incident Matrix. "
-            f"As an enterprise security agent, I am strictly restricted from executing commands that threaten corporate infrastructure, bypass compliance bylaws, or generate social engineering vectors.*"
+            f"*This directive has been logged and flagged in the InvenTech Security Incident Matrix.*"
         )
-        
         return {
             "intent": "security_block",
             "summary_verdict": alert_message,
@@ -58,31 +49,31 @@ def intent_router_node(state: InvestigationState) -> Dict[str, Any]:
             "threat_level": "CRITICAL / BLOCKED",
             "sub_queries": ["Intercept incoming adversarial prompt"],
             "findings": [],
-            "timeline": [{
-                "timestamp": "IMMEDIATE",
-                "source_document": "GUARDRAIL_SHIELD",
-                "details": f"Blocked malicious prompt execution. Category: {threat_type}"
-            }]
+            "timeline": []
         }
 
-    # Step 1: Precise deterministic routing
-    investigation_keywords = ["leak", "falcon", "audit", "log", "resigned", "history", "trace"]
-    if any(keyword in query_lower for keyword in investigation_keywords):
+    # 2. CHAT OVERRIDE (For performance matrix or policies)
+    # If they ask about performance, review, rating or general rules/policies,
+    # force it to route to "chat" node even if it contains a monitored name.
+    chat_keywords = ["performance", "review", "rating", "manager", "policy", "policies", "rule", "guideline", "bylaw"]
+    if any(kw in query_lower for kw in chat_keywords):
+        print("🟢 [ROUTER] Chat/Corporate Database intent matched (Overriding investigation routing).")
+        return {"intent": "chat"}
+
+    # 3. Precise Forensic Investigation Routing
+    investigation_keywords = ["leak", "falcon", "audit", "log", "resigned", "history", "trace", "timeline", "check", "profile", "did"]
+    name_keywords = ["alex", "susan", "brett", "michael"]
+    
+    if any(keyword in query_lower for keyword in investigation_keywords) or any(name in query_lower for name in name_keywords):
+        print("🔍 [ROUTER] Forensic investigation intent isolated.")
         return {"intent": "investigate"}
         
     return {"intent": "chat"}
 
 def security_block_node(state: InvestigationState) -> dict:
-    """
-    Pass-through visualization node for the active defense layout.
-    """
     return {}
 
 def general_chat_node(state: dict) -> Dict[str, Any]:
-    """
-    Handles conversational questions dynamically with an optimized SQLite tool lookup 
-    and robust local fallback engine.
-    """
     query = state.get("query", "")
     q_lower = query.lower()
     
@@ -90,128 +81,103 @@ def general_chat_node(state: dict) -> Dict[str, Any]:
     client = genai.Client(api_key=api_key) if api_key else None
     
     retrieved_corporate_context = ""
-    db_path = "security_vault.db" # should match to db file name
-
-    # AUTOMATED SQL DATA TOOL ACCESSOR 
-    try:
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
-        
-        # Scenario A: User is asking about Employee Performance Reviews
-        if any(kw in q_lower for kw in ["performance", "review", "rating", "manager"]):
-            target_name = None
-            for name in ["alex", "susan", "brett", "michael"]:
-                if name in q_lower:
-                    target_name = name
-                    break
-            
-            if target_name:
-                cursor.execute(
-                    "SELECT role, manager, rating, review_text FROM performance_reviews WHERE employee_name = ?", 
-                    (target_name,)
-                )
-                row = cursor.fetchone()
-                if row:
-                    retrieved_corporate_context += (
-                        f"\n[INTERNAL HR PERFORMANCE MATRIX]\n"
-                        f"Employee: {target_name.capitalize()} | Role: {row[0]} | Manager: {row[1]}\n"
-                        f"Performance Rating: {row[2]}\n"
-                        f"Manager Evaluation Brief: {row[3]}\n"
-                    )
-
-        # Scenario B: User is asking about Company Policies or Compliance Rules
-        if any(kw in q_lower for kw in ["policy", "rule", "prohibited", "allowed", "guideline", "bylaw", "falcon", "company", "data"]):
-            cursor.execute("SELECT policy_section, policy_title, policy_content FROM company_policies")
-            policies = cursor.fetchall()
-            
-            matched_policies = []
-            for sec, title, content in policies:
-                # Core keyword scan to pull only relevant policy paragraphs
-                if any(kw in content.lower() or kw in title.lower() for kw in q_lower.split()):
-                    matched_policies.append(f"Section {sec} - {title}: {content}")
-            
-            if matched_policies:
-                retrieved_corporate_context += "\n[CORPORATE COMPLIANCE POLICIES]\n" + "\n".join(matched_policies) + "\n"
-            else:
-                # If no specific keyword hits, serve the core security policies as standard context
-                retrieved_corporate_context += "\n[CORPORATE COMPLIANCE POLICIES]\n" + f"Section {policies[0][0]}: {policies[0][2]}\nSection {policies[1][0]}: {policies[1][2]}"
-
-        conn.close()
-    except Exception as db_err:
-        print(f"⚠️ SQLite Knowledge Base retrieval bypassed: {db_err}")
-
-    # GENERATION LAYER: Build the Agentic Output
-
     
-    # Local Deterministic Text Engine (If API is Throttled / 429)
-    # Helper function for smart, beautiful local responses when offline or throttled (429)
+    # DYNAMIC PATH TO TARGET THE POLICY VAULT DATABASE
+    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+    ROOT_DIR = os.path.dirname(CURRENT_DIR)
+    
+    # Targeting the correct security_vault.db in the root folder!
+    db_path = os.path.join(ROOT_DIR, "security_vault.db")
+
+    print(f"📁 [GENERAL CHAT DATABASE AUDIT] Connecting to: {db_path}")
+
+    try:
+        if os.path.exists(db_path):
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            
+            # Scenario A: Performance Matrix Lookup
+            if any(kw in q_lower for kw in ["perform", "review", "rate", "rating", "manager"]):
+                target_name = None
+                for name in ["alex", "susan", "brett", "michael"]:
+                    if name in q_lower:
+                        target_name = name
+                        break
+                
+                if target_name:
+                    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='performance_reviews'")
+                    if cursor.fetchone():
+                        cursor.execute(
+                            "SELECT role, manager, rating, review_text FROM performance_reviews WHERE employee_name LIKE ?", 
+                            (f"%{target_name}%",)
+                        )
+                        row = cursor.fetchone()
+                        if row:
+                            retrieved_corporate_context += (
+                                f"\n[INTERNAL HR PERFORMANCE MATRIX]\n"
+                                f"Employee: {target_name.capitalize()} | Role: {row[0]} | Manager: {row[1]}\n"
+                                f"Performance Rating: {row[2]}\n"
+                                f"Manager Evaluation Brief: {row[3]}\n"
+                            )
+
+            # Scenario B: Corporate Policy Rule Lookup (using robust substring matches)
+            if any(kw in q_lower for kw in ["polic", "rule", "prohibit", "allow", "guideline", "bylaw", "company", "data", "threat"]):
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='company_policies'")
+                if cursor.fetchone():
+                    cursor.execute("SELECT policy_section, policy_title, policy_content FROM company_policies")
+                    policies = cursor.fetchall()
+                    
+                    matched_policies = []
+                    for sec, title, content in policies:
+                        content_lower = content.lower()
+                        title_lower = title.lower()
+                        # Matching singular/plurals and synonyms dynamically
+                        if "polic" in q_lower or any(kw in content_lower or kw in title_lower for kw in ["rule", "guideline", "bylaw", "prohibited", "allowed", "falcon", "data", "threat"]):
+                            matched_policies.append(f"Section {sec} - {title}: {content}")
+                    
+                    if matched_policies:
+                        retrieved_corporate_context += "\n[CORPORATE COMPLIANCE POLICIES]\n" + "\n".join(matched_policies) + "\n"
+            
+            conn.close()
+        else:
+            print(f"⚠️ [GENERAL CHAT DATABASE AUDIT] security_vault.db not found at: {db_path}")
+    except Exception as db_err:
+        print(f"❌ SQLite general chat retrieval error: {db_err}")
+
+    # GENERATION LAYER
     def _get_local_chat_response(q: str, context: str) -> str:
         q_lower = q.lower()
+        if "name" in q_lower and ("company" in q_lower or "organization" in q_lower or "enterprise" in q_lower):
+            return "🏢 The name of the company under audit is **InvenTech Solutions**."
+        elif any(greet in q_lower for greet in ["hi", "hello", "hey"]):
+            return "Hello! I am your automated Smart Enterprise & Operations Agent. How can I assist you today, CEO?"
         
-        # STEP 1: Check for direct corporate meta-questions FIRST before looking at data dumps
-        if "name" in q_lower and ("company" in q_lower or "organization" in q_lower or "enterprise" in q_lower):
-            return "🏢 The name of the company under audit is **InvenTech Solutions**."
-            
-        elif any(greet in q_lower for greet in ["hi", "hello", "hey"]):
-            return "Hello! I am your automated Smart Enterprise & Operations Agent. I am connected to the InvenTech Solutions Compliance Policies database and HR Performance Matrix records. How can I assist you today, CEO?"
-            
-        elif any(status in q_lower for status in ["status", "connected", "health"]):
-            return "System Status Report: Connected and Operational. All corporate policy records, HR performance ledgers, and forensic logging streams are fully online."
-
-        # STEP 2: If it's not a generic meta-question, look at the extracted database context data
         if context:
-            clean_context = context.replace("Section SEC_4.1", "\n🔒 **Section SEC_4.1**")\
-                                   .replace("Section SEC_4.2", "\n🛡️ **Section SEC_4.2**")\
-                                   .replace("Section SEC_4.3", "\n🌐 **Section SEC_4.3**")\
-                                   .replace("Section HR_7.5", "\n📋 **Section HR_7.5**")
-            
-            return (
-                f"📊 **Executive Enterprise Information System [LOCAL ENGINE ACTIVE]**\n\n"
-                f"Here is the verified data extracted from our internal server tables:\n{clean_context}\n\n"
-                f"*Administrative Note: Information generated securely via local database lookup layers.*"
-            )
-            
-        # STEP 3: Complete baseline catch-all fallback
-        return f"I received your query: '{q}'. To pull company guidelines or performance profiles, please mention an employee name or specific corporate topics (e.g., 'data policy', 'company name', or 'Brett performance')."
-            
-        # 2. Advanced text matching for common meta-questions that miss the DB trigger
-        if "name" in q_lower and ("company" in q_lower or "organization" in q_lower or "enterprise" in q_lower):
-            return "🏢 The name of the company under audit is **InvenTech Solutions**."
-            
-        elif any(greet in q_lower for greet in ["hi", "hello", "hey"]):
-            return "Hello! I am your automated Smart Enterprise & Operations Agent. I am connected to the InvenTech Solutions Compliance Policies database and HR Performance Matrix records. How can I assist you today, CEO?"
-            
-        elif any(status in q_lower for status in ["status", "connected", "health"]):
-            return "System Status Report: Connected and Operational. All corporate policy records, HR performance ledgers, and forensic logging streams are fully online."
-            
-        else:
-            return f"I received your query: '{q}'. To pull company guidelines or performance profiles, please mention an employee name or specific corporate topics (e.g., 'data policy', 'company name', or 'Brett performance')."
+            return f"📊 **Executive Enterprise Information System [LOCAL ENGINE ACTIVE]**\n\n{context}"
+        
+        return f"I received your query: '{q}'. I am connected to the InvenTech Solutions network compliance engine. Please state a targeted operational directive."
 
-    # Route request safely
     if state.get("demo_mode") or not client:
         verdict = _get_local_chat_response(query, retrieved_corporate_context)
     else:
         try:
             system_instruction = (
                 "You are an Elite Enterprise Operations & Security Intelligent Assistant serving the CEO.\n"
-                "Your interface has access to company policies and employee performance database records via structured SQL tools.\n"
-                "Review the following context block if populated, and use it to craft a highly professional, comprehensive executive answer.\n"
-                "If the context is empty, answer the user general security question with authority.\n"
-                "Do not reference 'context blocks' or 'database fields' directly to the user—speak naturally as an intelligent corporate advisor."
+                "Review the context block populated from the SQL backend database and answer the general security query with authority.\n"
+                "Do not reference database names or system strings directly to the CEO. Speak naturally as an executive advisor."
             )
-            
             prompt = f"{system_instruction}\n\nInternal Database Context:\n{retrieved_corporate_context}\n\nUser Query: {query}"
             
             response = client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt
+                model='gemini-2.5-flash', 
+                contents=prompt,
+                config={"temperature": 0.0}
             )
             verdict = response.text.strip()
         except Exception as api_err:
-            print(f"⚠️ Chat API Limit Triggered ({api_err}). Executing local database mapping engine...")
+            print(f"⚠️ Gemini API execution failed, falling back to local database context parsing: {api_err}")
             verdict = _get_local_chat_response(query, retrieved_corporate_context)
 
-    # Return the uniform dictionary object layout to main.py
     return {
         "summary_verdict": verdict,
         "intent": "chat",
@@ -221,53 +187,27 @@ def general_chat_node(state: dict) -> Dict[str, Any]:
     }
 
 def planner_node(state: InvestigationState) -> Dict[str, Any]:
-    """
-    Step 2: Prepares targeted RAG data points.
-    Creates a clean structural execution list for the database lookup.
-    """
-    # Simply pull the target employee name out of the string dynamically
-    query_words = state["query"].split()
-    target = "Alex" # Default placeholder fallback
+    query_words = state["query"].lower().split()
+    target = "alex"
     for word in query_words:
-        if word.lower() in ["alex", "susan"]: # Map to your 10-person dataset targets
+        if word in ["alex", "susan", "brett", "michael"]:
             target = word
             break
-
-    # Build the atomic log paths we want the system to gather from SQLite
-    sub_queries = [
-        f"Review HR records for {target}",
-        f"Analyze authentication logs for {target}",
-        f"Inspect file access logs for {target}",
-        f"Examine USB device connection history for {target}",
-        f"Search email communications for {target}",
-        f"Monitor Slack channels for {target}",
-        f"Audit browser search history for {target}"
-    ]
-
-    return {"sub_queries": sub_queries, "findings": []}
+    sub_queries = [f"Review HR records for {target.capitalize()}", f"Analyze authentication logs for {target.capitalize()}"]
+    return {"sub_queries": sub_queries, "findings": [], "intent": "investigate"}
 
 async def parallel_rag_node(state: InvestigationState) -> Dict[str, Any]:
-    """
-    Step 3: Gathers raw chronological logs from the database.
-    """
-    from Agents.retriever import recall_from_source, get_employee_profile
-    
-    # Extract the name from the query string
-    query_words = state["query"].split()
-    target = "Alex"
+    query_words = state["query"].lower().split()
+    target = "alex"
     for word in query_words:
-        if word.lower() in ["alex", "susan"]:
+        if word in ["alex", "susan", "brett", "michael"]:
             target = word
             break
-            
-    # Single fast database pull for all logs involving this user
     raw_logs = recall_from_source(target)
-    
     return {"timeline": raw_logs}
 
 def correlator_node(state: InvestigationState) -> Dict[str, Any]:
-    timeline = ForensicCorrelator.construct_timeline(state["findings"])
-    return {"timeline": timeline}
+    return {"timeline": state.get("timeline", [])}
 
 def scorer_node(state: InvestigationState) -> Dict[str, Any]:
     scorer = ThreatScorer()
@@ -275,9 +215,7 @@ def scorer_node(state: InvestigationState) -> Dict[str, Any]:
     return {"threat_score": score, "threat_level": level, "summary_verdict": verdict}
 
 def report_node(state: InvestigationState) -> Dict[str, Any]:
-    from reports.report_generator import generate_pdf_report
-    path = generate_pdf_report(state)
-    return {"report_path": path}
+    return {"report_path": "report.pdf"}
 
 def route_decision(state: InvestigationState) -> str:
     intent = state.get("intent")
@@ -285,9 +223,7 @@ def route_decision(state: InvestigationState) -> str:
         return "security_block"
     return "planner" if intent == "investigate" else "general_chat"
 
-# COMPILING CONFIGURATION DICTIONARY MATRIX ENGINE 
 workflow = StateGraph(InvestigationState)
-
 workflow.add_node("router", intent_router_node)
 workflow.add_node("general_chat", general_chat_node)
 workflow.add_node("planner", planner_node)
@@ -297,17 +233,8 @@ workflow.add_node("scorer", scorer_node)
 workflow.add_node("report", report_node)
 workflow.add_node("security_block", security_block_node)
 
-
 workflow.set_entry_point("router")
-
-workflow.add_conditional_edges(
-    "router",
-    route_decision,
-    { "security_block": "security_block",
-      "planner": "planner", 
-      "general_chat": "general_chat"}
-)
-
+workflow.add_conditional_edges("router", route_decision, {"security_block": "security_block", "planner": "planner", "general_chat": "general_chat"})
 workflow.add_edge("planner", "parallel_rag_gather")
 workflow.add_edge("parallel_rag_gather", "correlator")
 workflow.add_edge("correlator", "scorer")
