@@ -2,6 +2,7 @@ import re
 import os
 import sys
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import Dict, Any
 from dotenv import load_dotenv
@@ -109,3 +110,14 @@ async def run_investigation(request: QueryRequest):
     except Exception as e:
         print(f"❌ Core API transmission pipeline failure: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/report")
+async def download_report(path: str):
+    print(f"📥 [PDF ENGINE] Request received to download file: '{path}'")
+    
+    # Check if file physically exists on the container storage
+    if os.path.exists(path):
+        return FileResponse(path, media_type='application/pdf', filename=path)
+        
+    print(f"❌ [PDF ENGINE] File not found on disk path: '{path}'")
+    return {"error": f"File '{path}' not found on cloud server storage."}
