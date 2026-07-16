@@ -5,8 +5,8 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
 
 def generate_pdf_report(state: dict) -> str:
-    os.makedirs("output_reports", exist_ok=True)
-    report_path = f"output_reports/incident_report_{int(state.get('threat_score',0))}.pdf"
+    # Use a fixed standard filename in the root workspace directory
+    report_path = "report.pdf"
     
     doc = SimpleDocTemplate(report_path, pagesize=letter)
     story = []
@@ -28,10 +28,14 @@ def generate_pdf_report(state: dict) -> str:
     # Chronological Table Construction Setup
     table_data = [["Timestamp", "Source Matrix Channel", "Activity Log Slice Snapshot"]]
     for event in state.get("timeline", []):
+        # Added string typecast fallback safety boundary bounds to avoid None runtime slicing exceptions
+        raw_ts = str(event.get("timestamp", ""))
+        ts_display = raw_ts[:16] if len(raw_ts) >= 16 else raw_ts
+        
         table_data.append([
-            event.get("timestamp")[:16],
-            event.get("source"),
-            str(event.get("details"))[:65] + "..."
+            ts_display,
+            str(event.get("source", "N/A")),
+            str(event.get("details", "N/A"))[:65] + "..."
         ])
         
     t = Table(table_data, colWidths=[110, 100, 310])
