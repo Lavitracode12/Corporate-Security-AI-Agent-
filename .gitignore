@@ -6,7 +6,7 @@ dist/
 wheels/
 *.egg-info
 .streamlit/
-*.db
+# *.db
 # Virtual environments
 .venv
 .env

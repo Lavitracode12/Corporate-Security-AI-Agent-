@@ -452,7 +452,7 @@ if execute:
                 # 4. Built Report Lab Document File Assets Endpoint Sync Stream Action
                 report_path = res.get("report_path")
                 if report_path:
-                    report_url = f"http://127.0.0.1:8080/report?path={report_path}"
+                    report_url = f"https://security-agent-backend.onrender.com/report?path={report_path}"
                     alert("success", "task_alt", "", "Professional Incident Audit Log PDF Compiled Successfully.")
                     st.markdown(f"""
                     <a class="report-link" href="{report_url}" target="_blank">
